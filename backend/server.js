@@ -11,6 +11,8 @@ import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+const BASE_URL = process.env.BASE_URL;
+const PORT = process.env.PORT || 8800;
 const app = express();
 dotenv.config();
 
@@ -24,6 +26,7 @@ const connect = async ()=>{
 }
 
 app.use(express.json());
+//app.use(cors({ origin: `${BASE_URL}`, credentials: true }));
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cookieParser());
 
@@ -42,7 +45,7 @@ app.use((err, req, res, next)=>{
   return res.status(errorStatus).send(errorMessage);
 });
 
-app.listen(8800, ()=>{
+app.listen(PORT, ()=>{
     connect();
     console.log("Backend server is up and running!");
 })
